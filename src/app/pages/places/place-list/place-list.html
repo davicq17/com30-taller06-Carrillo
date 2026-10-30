@@ -1,0 +1,113 @@
+
+<section class="places-container">
+
+  <header class="list-header">
+    <div>
+      <h2>Espacios registrados</h2>
+      <p>Administra los espacios disponibles.</p>
+    </div>
+
+    <a routerLink="/places/new" class="new-place-button">
+      + Nuevo espacio
+    </a>
+  </header>
+
+  <div class="places-grid">
+
+    @for (place of places(); track place.id) {
+
+      <article class="place-card">
+
+        <div class="card-header">
+          <h3>{{ place.name }}</h3>
+
+          <span
+            class="status"
+            [ngClass]="place.status.toLowerCase()"
+          >
+            {{ place.status === 'AVAILABLE' ? 'Disponible' :
+               place.status === 'PENDING' ? 'Pendiente' : 'Inactivo' }}
+          </span>
+        </div>
+
+        <p class="location">
+          <span>Ubicación:</span> {{ place.location }}
+        </p>
+
+        <div class="place-details">
+          <span>Capacidad: {{ place.capacity }} personas</span>
+          <span>Categoría: {{ place.category }}</span>
+          <span>Horario: {{ place.openingTime }} - {{ place.closingTime }}</span>
+        </div>
+
+        <p class="description">
+          {{ place.description }}
+        </p>
+
+        <div class="items-info">
+          <strong>Elementos registrados:</strong>
+
+          @for (item of place.items; track $index) {
+            <span class="item-tag">
+              {{ item.name }} ({{ item.quantity }})
+            </span>
+          } @empty {
+            <span class="no-items">Sin elementos registrados</span>
+          }
+        </div>
+
+        <div class="card-actions">
+
+          <select
+            #statusSelect
+            [value]="place.status"
+            (change)="cambiarEstado(
+              place.id,
+              $any(statusSelect.value)
+            )"
+          >
+            <option value="AVAILABLE">Disponible</option>
+            <option value="PENDING">Pendiente</option>
+            <option value="INACTIVE">Inactivo</option>
+          </select>
+
+          <button
+            type="button"
+            class="delete-button"
+            (click)="eliminar(place.id)"
+          >
+            Eliminar
+          </button>
+
+        </div>
+
+      </article>
+
+    } @empty {
+
+      <div class="empty-message">
+        <h3>No hay espacios registrados</h3>
+        <p>Registra un espacio para que aparezca en este listado.</p>
+      </div>
+
+    }
+
+  </div>
+
+  @defer (on interaction) {
+
+    <app-place-summary />
+
+  } @placeholder {
+
+    <button type="button" class="summary-button">
+      Consultar resumen de espacios
+    </button>
+
+  } @loading {
+
+    <p>Cargando resumen...</p>
+
+  }
+
+</section>

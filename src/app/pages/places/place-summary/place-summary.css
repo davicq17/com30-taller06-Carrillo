@@ -1,0 +1,33 @@
+
+:host {
+  display: block;
+  margin-top: 25px;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.summary h3 {
+  grid-column: 1 / -1;
+  color: #1e293b;
+}
+
+.summary-card {
+  padding: 20px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.summary-card p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.summary-card strong {
+  font-size: 28px;
+  color: #2563eb;
+}

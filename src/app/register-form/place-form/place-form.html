@@ -1,0 +1,238 @@
+
+<h2>Registrar espacio</h2>
+
+<form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="name">Nombre del espacio</label>
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      placeholder="Ej. Auditorio principal"
+    />
+  </div>
+
+  @if (
+    placeForm.controls.name.invalid &&
+    (placeForm.controls.name.touched || placeForm.controls.name.dirty)
+    ) {
+        <div class="error-message">
+
+            @if (placeForm.controls.name.hasError('required')) {
+            <p>El nombre del espacio es obligatorio.</p>
+            }
+
+            @if (placeForm.controls.name.hasError('minlength')) {
+            <p>El nombre debe tener al menos 3 caracteres.</p>
+            }
+
+            @if (placeForm.controls.name.hasError('pattern')) {
+            <p>El nombre contiene caracteres no permitidos.</p>
+            }
+
+            @if (placeForm.controls.name.hasError('forbiddenWord')) {
+            <p>El nombre contiene una palabra no permitida.</p>
+            }
+
+        </div>
+    }
+
+  <div>
+    <label for="location">Ubicación</label>
+    <input
+      id="location"
+      type="text"
+      formControlName="location"
+      placeholder="Ej. Edificio A, piso 2"
+    />
+  </div>
+
+  @if (
+    placeForm.controls.location.invalid &&
+    (placeForm.controls.location.touched || placeForm.controls.location.dirty)
+    ) {
+    @if (placeForm.controls.location.hasError('required')) {
+        <p>La ubicación es obligatoria.</p>
+    }
+
+    @if (placeForm.controls.location.hasError('minlength')) {
+        <p>La ubicación debe tener al menos 3 caracteres.</p>
+    }
+    }
+
+  <div>
+    <label for="capacity">Capacidad</label>
+    <input
+      id="capacity"
+      type="number"
+      formControlName="capacity"
+    />
+  </div>
+
+  @if (
+    placeForm.controls.capacity.invalid &&
+    (placeForm.controls.capacity.touched || placeForm.controls.capacity.dirty)
+    ) {
+    @if (placeForm.controls.capacity.hasError('required')) {
+        <p>La capacidad es obligatoria.</p>
+    }
+
+    @if (placeForm.controls.capacity.hasError('min')) {
+        <p>La capacidad debe ser como mínimo 1.</p>
+    }
+    }
+
+  <div>
+    <label for="description">Descripción</label>
+    <textarea
+      id="description"
+      formControlName="description"
+      placeholder="Describe las características del espacio"
+    ></textarea>
+  </div>
+
+  @if (
+    placeForm.controls.description.invalid &&
+    (placeForm.controls.description.touched || placeForm.controls.description.dirty)
+    ) {
+    @if (placeForm.controls.description.hasError('required')) {
+        <p>La descripción es obligatoria.</p>
+    }
+
+    @if (placeForm.controls.description.hasError('minlength')) {
+        <p>La descripción debe tener al menos 10 caracteres.</p>
+    }
+    }
+
+  <div>
+    <label for="category">Categoría</label>
+    <select id="category" formControlName="category">
+      <option value="">Selecciona una categoría</option>
+      <option value="AUDITORIO">Auditorio</option>
+      <option value="SALA">Sala de reuniones</option>
+      <option value="LABORATORIO">Laboratorio</option>
+      <option value="CANCHA">Cancha deportiva</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="openingTime">Hora de apertura</label>
+    <input
+      id="openingTime"
+      type="time"
+      formControlName="openingTime"
+    />
+  </div>
+
+  <div>
+    <label for="closingTime">Hora de cierre</label>
+    <input
+      id="closingTime"
+      type="time"
+      formControlName="closingTime"
+    />
+  </div>
+
+  @if (
+    placeForm.hasError('invalidTimeRange') &&
+    (
+        placeForm.controls.openingTime.touched ||
+        placeForm.controls.openingTime.dirty ||
+        placeForm.controls.closingTime.touched ||
+        placeForm.controls.closingTime.dirty
+    )
+    ) {
+    <p class="error-message">
+        La hora de cierre debe ser posterior a la hora de apertura.
+    </p>
+    }
+
+    <div formArrayName="items">
+    <h3>Elementos del espacio</h3>
+
+    @for (item of items.controls; track $index; let i = $index) {
+        <div [formGroupName]="i">
+
+        <h4>Elemento {{ i + 1 }}</h4>
+
+        <div>
+            <label [for]="'item-name-' + i">
+            Nombre del elemento
+            </label>
+
+            <input
+            [id]="'item-name-' + i"
+            type="text"
+            formControlName="name"
+            placeholder="Ej. Proyector"
+            />
+
+                        @if (
+            items.at(i).controls.name.invalid &&
+            (items.at(i).controls.name.touched || items.at(i).controls.name.dirty)
+            ) {
+            @if (items.at(i).controls.name.hasError('required')) {
+                <p>El nombre del elemento es obligatorio.</p>
+            }
+
+            @if (items.at(i).controls.name.hasError('minlength')) {
+                <p>El nombre debe tener al menos 2 caracteres.</p>
+            }
+            }
+        </div>
+
+        <div>
+            <label [for]="'item-quantity-' + i">
+            Cantidad
+            </label>
+
+            <input
+            [id]="'item-quantity-' + i"
+            type="number"
+            formControlName="quantity"
+            />
+
+            @if (
+            items.at(i).controls.quantity.invalid &&
+            (items.at(i).controls.quantity.touched || items.at(i).controls.quantity.dirty)
+            ) {
+            @if (items.at(i).controls.quantity.hasError('required')) {
+                <p>La cantidad es obligatoria.</p>
+            }
+
+            @if (items.at(i).controls.quantity.hasError('min')) {
+                <p>La cantidad debe ser como mínimo 1.</p>
+            }
+            }
+
+        </div>
+
+        <button
+            type="button"
+            (click)="removeItem(i)"
+        >
+            Eliminar elemento
+        </button>
+
+        </div>
+    }
+
+    <button
+        type="button"
+        (click)="addItem()"
+    >
+        Agregar elemento
+    </button>
+    </div>
+
+    @if (items.hasError('minItems') && (items.touched || items.dirty)) {
+        <p>Debes registrar al menos un elemento para el espacio.</p>
+    }
+
+  <button type="submit">
+    Registrar espacio
+  </button>
+
+</form>
+
