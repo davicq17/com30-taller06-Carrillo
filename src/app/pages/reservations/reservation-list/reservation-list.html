@@ -1,0 +1,79 @@
+<div class="mt-4 overflow-x-auto rounded-xl border border-slate-200">
+  <table class="w-full text-left text-sm">
+    <thead class="bg-slate-900 text-xs uppercase tracking-wider text-white">
+      <tr>
+        <th class="px-4 py-3">Espacio</th>
+        <th class="px-4 py-3">Reponsable</th>
+        <th class="px-4 py-3">Fecha</th>
+        <th class="px-4 py-3">Horario</th>
+        <th class="px-4 py-3">Estado</th>
+        <th class="px-4 py-3">Asistentes</th>
+        <th class="px-4 py-3">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (r of reservations(); track r.id) {  
+        <tr
+          class="border-t border-slate-100"
+        >
+          <td class="px-4 py-3 font-semibold text-slate-900">{{ r.placeName }}</td>
+          <td class="px-4 py-3 text-slate-600">{{ r.responsible }}</td>
+          <td class="px-4 py-3 text-slate-600">{{ r.date}}</td>
+          <td class="px-4 py-3 text-slate-600">{{ r.startTime }} - {{r.endTime}}</td>
+
+          <td class="px-4 py-3 text-slate-600">
+            @switch (r.status) {
+              @case('ACCEPTED') {<span class="etq verde">Acceptada</span>}
+              @case('PENDING')       {<span class="etq amarillo">Pediente</span>}
+              @default            {<span class="etq rojo">rechazado</span>}
+            }
+          </td>
+        
+          <td class="px-4 py-3 font-semibold text-slate-900">
+            {{ r.attendees }}
+          </td>
+          <td class="px-4 py-3">
+            <button
+              type="button"
+              class="rounded-md bg-amber-400 px-3 py-1 text-xs font-bold text-slate-900 disabled:opacity-30"
+              (click)="cambiarEStado(r.placeId, 'RESERVED', r.id, 'ACCEPTED')"
+              >
+              Aceptar
+            </button>
+            <button
+              type="button"
+              class="ml-1 rounded-md bg-slate-200 px-3 py-1 text-xs font-bold text-slate-700"
+              (click)="cambiarEStado(r.placeId, 'AVAILABLE',r.id, 'REJECTED')"
+            >
+              Rechazar
+            </button>
+            <button
+              type="button"
+              class="rounded-md bg-amber-400 px-3 py-1 text-xs font-bold text-slate-900 disabled:opacity-30"
+              (click)="eliminar(r.id)"
+              >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="px-4 py-8 text-center text-slate-400">
+            No hay reservaciones registradas
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-4 grid gap-3 sm:grid-cols-3">
+  <div class="rounded-xl bg-slate-900 px-5 py-4 text-white">
+    <div class="text-xs uppercase tracking-widest text-amber-400">Peticiones de reserva</div>
+    <div class="mt-1 text-3xl font-bold">{{ totalReservation()}}</div>
+  </div>
+  <div class="rounded-xl bg-slate-100 px-5 py-4">
+    <div class="text-xs uppercase tracking-widest text-slate-500">Reservas pendientes</div>
+    <div class="mt-1 text-3xl font-bold text-slate-900">{{ pendingPlaces() }}</div>
+  </div>
+</div>

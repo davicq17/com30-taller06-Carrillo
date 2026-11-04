@@ -4,6 +4,7 @@ import { PlaceService } from '../../services/place.service';
 import { noForbiddenWords } from '../../validators/place-name.validator';
 import { timeRangeValidator } from '../../validators/time-range.validator';
 import { atLeastOneItem } from '../../validators/at-least-one-item.validators';
+import { Router, RouterLink } from '@angular/router';
 
 type PLaceItemForm = FormGroup<{
   name: FormControl<string>;
@@ -11,7 +12,7 @@ type PLaceItemForm = FormGroup<{
 }>
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   selector: 'app-place-form',
   styleUrl: './place-form.css',
   templateUrl: './place-form.html',
@@ -19,6 +20,7 @@ type PLaceItemForm = FormGroup<{
 export class PlaceForm {
   private readonly fb = inject(FormBuilder);
   private readonly placeService = inject(PlaceService);
+  private readonly router = inject(Router);
 
   readonly placeForm = this.fb.nonNullable.group({
     name: ['',[Validators.required,Validators.minLength(3),Validators.pattern(/^[\p{L}\p{M}0-9 ]+$/u), noForbiddenWords()]],
@@ -45,9 +47,9 @@ export class PlaceForm {
     this.placeService.agregar(formValue);
 
     this.placeForm.reset();
-    this.placeForm.reset();
     this.items.clear();
     this.addItem();
+    this.router.navigate(['places']);
 
     console.log('Espacio registrado correctamente')
   }

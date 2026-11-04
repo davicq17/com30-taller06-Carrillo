@@ -1,0 +1,87 @@
+<section class="places-container">
+
+  <header class="list-header">
+    <div>
+      <h2>Espacios</h2>
+      <p>Listado de los espacios disponibles.</p>
+    </div>
+  </header>
+
+  <div class="places-grid">
+
+    @for (place of places(); track place.id) {
+
+      <article class="place-card">
+
+        <div class="card-header">
+          <h3>{{ place.name }}</h3>
+
+          <span
+            class="status"
+            [ngClass]="place.status.toLowerCase()"
+          >
+            {{ place.status === 'AVAILABLE' ? 'Disponible' :
+               place.status === 'PENDING' ? 'Pendiente' : 'Inactivo' }}
+          </span>
+        </div>
+
+        <p class="location">
+          <span>Ubicación:</span> {{ place.location }}
+        </p>
+
+        <div class="place-details">
+          <span>Capacidad: {{ place.capacity }} personas</span>
+          <span>Categoría: {{ place.category }}</span>
+          <span>Horario: {{ place.openingTime }} - {{ place.closingTime }}</span>
+        </div>
+
+        <p class="description">
+          {{ place.description }}
+        </p>
+
+        <div class="items-info">
+          <strong>Elementos registrados:</strong>
+
+          @for (item of place.items; track $index) {
+            <span class="item-tag">
+              {{ item.name }} ({{ item.quantity }})
+            </span>
+          } @empty {
+            <span class="no-items">Sin elementos registrados</span>
+          }
+        </div>
+
+        <div class="card-actions">
+
+          <button
+            type="button"
+            class="delete-button"
+            (click)="reservar(place.name, place.id)"
+          >
+            Reservar
+          </button>
+
+        </div>
+
+      </article>
+
+    } @empty {
+
+      <div class="empty-message">
+        <h3>No hay espacios Disponibles</h3>
+      </div>
+
+    }
+
+    @if(visible()){
+      <div>
+        <app-reservation-form 
+        [place]="placeN()"
+        [placeId]="placeId()"  
+        (cerrar)="visible.set($event)"></app-reservation-form>
+      </div>
+    }
+
+  </div>
+
+</section>

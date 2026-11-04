@@ -1,10 +1,11 @@
 import { ReservationStatus } from "./enums/reservation-status.enum";
 
 export interface Reservation {
-    id: number;
+    id: string;
     responsible: string;
-    place: number;
-    date: Date;
+    placeName: string;
+    placeId: string;
+    date: string;
     startTime: string;
     endTime: string;
     attendees: number;

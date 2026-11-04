@@ -1,0 +1,44 @@
+<div class="mt-4 overflow-x-auto rounded-xl border border-slate-200">
+  <table class="w-full text-left text-sm">
+    <thead class="bg-slate-900 text-xs uppercase tracking-wider text-white">
+      <tr>
+        <th class="px-4 py-3">Espacio</th>
+        <th class="px-4 py-3">Reponsable</th>
+        <th class="px-4 py-3">Fecha</th>
+        <th class="px-4 py-3">Horario</th>
+        <th class="px-4 py-3">Estado</th>
+        <th class="px-4 py-3">Asistentes</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (r of reservations(); track r.id) {  
+        <tr
+          class="border-t border-slate-100"
+        >
+          <td class="px-4 py-3 font-semibold text-slate-900">{{ r.placeName }}</td>
+          <td class="px-4 py-3 text-slate-600">{{ r.responsible }}</td>
+          <td class="px-4 py-3 text-slate-600">{{ r.date}}</td>
+          <td class="px-4 py-3 text-slate-600">{{ r.startTime }} - {{r.endTime}}</td>
+
+          <td class="px-4 py-3 text-slate-600">
+            @switch (r.status) {
+              @case('ACCEPTED') {<span class="etq verde">Acceptada</span>}
+              @case('PENDING')       {<span class="etq amarillo">Pediente</span>}
+              @default            {<span class="etq rojo">rechazado</span>}
+            }
+          </td>
+        
+          <td class="px-4 py-3 font-semibold text-slate-900">
+            {{ r.attendees }}
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="px-4 py-8 text-center text-slate-400">
+            No hay reservaciones registradas
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

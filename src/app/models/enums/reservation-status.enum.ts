@@ -1,6 +1,4 @@
-export enum ReservationStatus {
-    PENDIENTE = 'PENDIENTE',
-    ACEPTADA = 'ACEPTADA',
-    REAGENDADA= 'REAGENDADA',
-    RECHAZADA = 'RECHAAZADA'
-}
+export type ReservationStatus =
+    |'PENDING'
+    |'ACCEPTED'
+    |'REJECTED';

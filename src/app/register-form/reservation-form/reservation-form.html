@@ -1,0 +1,93 @@
+<h2>Reservar</h2>
+<form [formGroup]="reservationForm" (ngSubmit)="onSumit()">
+    <div>
+        <label class="campo" for="placeName">Nombre del espacio</label>
+        <input  id="placeName" type="text" 
+         formControlName="placeName">
+    </div>
+    @if (reservationForm.controls.placeName.invalid &&
+     (reservationForm.controls.placeName.touched || reservationForm.controls.placeName.dirty)) {
+        @if (reservationForm.controls.placeName.hasError('required')) {
+            <p class="error">El nombre del espacio es obligatorio</p>
+        }
+
+        @if (reservationForm.controls.placeName.hasError('minLength')) {
+            <p class="error">El nombre debe tener minimo 3 caracteres</p>
+        }
+     }
+
+    <div>
+        <label class="campo" for="responsible">Responsable</label>
+        <input id="responsible" type="text" 
+        formControlName="responsible" placeholder="Persona responsable">
+    </div>
+    @if (reservationForm.controls.responsible.invalid &&
+     (reservationForm.controls.responsible.touched || reservationForm.controls.responsible.dirty)) {
+        @if (reservationForm.controls.responsible.hasError('required')) {
+            <p class="error">Debe haber un responsable de la reserva del lugar</p>
+        }
+        @if (reservationForm.controls.responsible.hasError('minLength')) {
+            <p class="error">El nombre debe tener minimo 3 caracteres</p>
+        }
+        @if (reservationForm.controls.responsible.hasError('pattern')) {
+            <p class="error">El nombre contiene caracteres no permitidos.</p>
+        }
+     }
+
+    <div>
+        <label class="campo" for="date">Fecha de reserva</label>
+        <input id="date" type="date" formControlName="date">
+    </div>
+    @if (reservationForm.controls.date.invalid && 
+     (reservationForm.controls.date.touched || reservationForm.controls.date.dirty)) {
+        <p class="error">La fecha es Obligatoria.</p>
+     }
+
+    <div>
+        <label class="campo" for="startTime">Hora de Inicio del evento</label>
+        <input id="startTime" type="time"
+         formControlName="startTime">
+    </div>
+
+    <div>
+        <label class="campo" for="endTime">Hora del cierre del evento</label>
+        <input id="endTime" type="time" 
+         formControlName="endTime">
+    </div>
+    @if (reservationForm.hasError('invalidTimeRange') && 
+     (reservationForm.controls.startTime.touched ||
+      reservationForm.controls.startTime.dirty || 
+      reservationForm.controls.endTime.touched || 
+      reservationForm.controls.endTime.dirty
+     )
+     ) {
+        <p class="error">
+            La hora de cierre debe ser posterior a la hora de apertura.
+        </p>
+     }
+
+    <div>
+        <label class="campo" for="attendees">Numero de asistentes</label>
+        <input id="attendees" type="number"
+         formControlName="attendees">
+    </div>
+    @if (reservationForm.controls.attendees.invalid && 
+     (reservationForm.controls.attendees.touched || reservationForm.controls.attendees.dirty)) {
+        @if (reservationForm.controls.attendees.hasError('required')) {
+            <p class="error">El numero de asistentes en obligatorio</p>
+        }
+
+        @if (reservationForm.controls.attendees.hasError('minLength')) {
+            <p class="error">Los asistentes deben ser como minimo 1.</p>
+        }
+     }
+     <button
+     type="submit">
+      Reservar
+     </button>
+</form>
+ <button
+      class="ml-1 mt-6 rounded-md bg-slate-800 px-3 py-1 text-xs font-bold text-white disabled:opacity-30" 
+      (click)="cerrar.emit(false)">
+        Cerrar
+</button>

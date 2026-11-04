@@ -25,8 +25,12 @@
             class="status"
             [ngClass]="place.status.toLowerCase()"
           >
-            {{ place.status === 'AVAILABLE' ? 'Disponible' :
-               place.status === 'PENDING' ? 'Pendiente' : 'Inactivo' }}
+          @switch(place.status){
+            @case('AVAILABLE') {Disponible}
+            @case('PENDING'){Pendiente}
+            @case('RESERVED'){Reservado}
+            @default {Inactivo}
+          }
           </span>
         </div>
 
@@ -68,6 +72,7 @@
           >
             <option value="AVAILABLE">Disponible</option>
             <option value="PENDING">Pendiente</option>
+            <option value="RESERVED">Reservado</option>
             <option value="INACTIVE">Inactivo</option>
           </select>
 

@@ -1,5 +1,12 @@
+<header class="list-header">
+    <div>
+      <h2>Registrar espacio</h2>
+    </div>
 
-<h2>Registrar espacio</h2>
+    <a routerLink="/places" class="place-button">
+       Volver
+    </a>
+  </header>
 
 <form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
 
@@ -115,6 +122,12 @@
       <option value="CANCHA">Cancha deportiva</option>
     </select>
   </div>
+  @if (placeForm.controls.category.invalid && 
+    (placeForm.controls.category.touched || placeForm.controls.category.dirty)) {
+      @if(placeForm.controls.category.hasError('required')){
+        <p>La Categori es obligatoria</p>
+      }
+    }
 
   <div>
     <label for="openingTime">Hora de apertura</label>
