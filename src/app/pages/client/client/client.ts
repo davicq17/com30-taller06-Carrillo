@@ -1,11 +1,11 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlaceService } from '../../../services/place.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { ReservationForm } from '../../../register-form/reservation-form/reservation-form';
 
 @Component({
-  imports: [CommonModule, ReservationForm],
+  imports: [CommonModule, ReservationForm, RouterLink, RouterOutlet],
   standalone: true,
   selector: 'app-client',
   styleUrl: './client.css',

@@ -1,3 +1,4 @@
+
 :host {
   display: block;
   min-height: 100vh;
@@ -5,14 +6,19 @@
   background: #f4f6f9;
   font-family: Arial, Helvetica, sans-serif;
   color: #263238;
+  box-sizing: border-box;
 }
+
+/* CONTENEDOR PRINCIPAL */
 
 .places-container {
-  max-width: 1200px;
-  margin: auto;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-/* Encabezado */
+/* ENCABEZADO */
 
 .list-header {
   display: flex;
@@ -34,32 +40,37 @@
   font-size: 14px;
 }
 
-.new-place-button {
-  padding: 10px 15px;
-  background: #2563eb;
-  color: white;
-  text-decoration: none;
-  border-radius: 7px;
-  font-size: 13px;
-  font-weight: bold;
+/* DISTRIBUCIÓN GENERAL */
+
+.places-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 22px;
+  width: 100%;
 }
 
-.new-place-button:hover {
-  background: #1d4ed8;
+/* Cuando hay un lugar seleccionado, el panel de detalles va al lado del listado */
+.places-layout:has(.details-panel app-panel-place) {
+  grid-template-columns: minmax(0, 1fr) 310px;
 }
 
-/* Cuadrícula */
+/* LISTADO DE TARJETAS */
 
 .places-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   align-items: start;
+  gap: 18px;
+  min-width: 0;
 }
 
-/* Tarjetas */
+/* TARJETAS */
 
 .place-card {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   padding: 17px;
   background: white;
   border: 1px solid #e2e8f0;
@@ -73,7 +84,7 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-/* Nombre y estado */
+/* NOMBRE Y ESTADO */
 
 .card-header {
   display: flex;
@@ -113,7 +124,7 @@
   color: #991b1b;
 }
 
-/* Información */
+/* INFORMACIÓN */
 
 .location {
   margin: 0 0 12px;
@@ -144,7 +155,7 @@
   overflow-wrap: anywhere;
 }
 
-/* Elementos */
+/* ELEMENTOS */
 
 .items-info {
   display: flex;
@@ -173,27 +184,20 @@
   font-size: 11px;
 }
 
-/* Acciones */
+/* BOTONES */
 
 .card-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   padding-top: 12px;
   border-top: 1px solid #e2e8f0;
 }
 
-.card-actions select {
-  flex: 1;
-  min-width: 0;
-  padding: 8px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  background: white;
-  color: #334155;
-  font-size: 11px;
-}
-
 .delete-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   padding: 8px 11px;
   border: none;
   border-radius: 6px;
@@ -201,6 +205,7 @@
   color: #531cb9;
   font-size: 11px;
   font-weight: bold;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -208,7 +213,29 @@
   background: #fecaca;
 }
 
-/* Lista vacía */
+/* PANEL DE DETALLES */
+
+.details-panel {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  position: sticky;
+  top: 20px;
+}
+
+/* Sin lugar seleccionado el panel no ocupa espacio */
+.details-panel:not(:has(app-panel-place)) {
+  display: none;
+}
+
+/* El componente renderizado por el router */
+
+.details-panel > router-outlet + * {
+  display: block;
+  width: 100%;
+}
+
+/* LISTA VACÍA */
 
 .empty-message {
   grid-column: 1 / -1;
@@ -228,7 +255,7 @@
   font-size: 13px;
 }
 
-/* Resumen */
+/* RESUMEN */
 
 .summary-button {
   margin-top: 25px;
@@ -245,19 +272,42 @@
   background: #334155;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
+  .places-layout {
+    gap: 15px;
+  }
+
+  .places-layout:has(.details-panel app-panel-place) {
+    grid-template-columns: minmax(0, 1fr) 260px;
+  }
+
+  .places-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
   :host {
     padding: 18px 12px;
+  }
+
+  .places-layout,
+  .places-layout:has(.details-panel app-panel-place) {
+    grid-template-columns: 1fr;
+  }
+
+  .details-panel {
+    position: static;
+  }
+
+  .places-grid {
+    grid-template-columns: 1fr;
   }
 
   .list-header {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .places-grid {
-    grid-template-columns: 1fr;
   }
 }

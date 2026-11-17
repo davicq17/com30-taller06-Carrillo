@@ -7,81 +7,73 @@
     </div>
   </header>
 
-  <div class="places-grid">
+  <div class="places-layout">
 
-    @for (place of places(); track place.id) {
+    <!-- Listado de tarjetas -->
+    <div class="places-grid">
 
-      <article class="place-card">
+      @for (place of places(); track place.id) {
 
-        <div class="card-header">
-          <h3>{{ place.name }}</h3>
+        <article class="place-card">
 
-          <span
-            class="status"
-            [ngClass]="place.status.toLowerCase()"
-          >
-            {{ place.status === 'AVAILABLE' ? 'Disponible' :
-               place.status === 'PENDING' ? 'Pendiente' : 'Inactivo' }}
-          </span>
-        </div>
+          <div class="card-header">
+            <h3>{{ place.name }}</h3>
 
-        <p class="location">
-          <span>Ubicación:</span> {{ place.location }}
-        </p>
-
-        <div class="place-details">
-          <span>Capacidad: {{ place.capacity }} personas</span>
-          <span>Categoría: {{ place.category }}</span>
-          <span>Horario: {{ place.openingTime }} - {{ place.closingTime }}</span>
-        </div>
-
-        <p class="description">
-          {{ place.description }}
-        </p>
-
-        <div class="items-info">
-          <strong>Elementos registrados:</strong>
-
-          @for (item of place.items; track $index) {
-            <span class="item-tag">
-              {{ item.name }} ({{ item.quantity }})
+            <span class="status"
+              [ngClass]="place.status.toLowerCase()">
+              {{ place.status === 'AVAILABLE' ? 'Disponible' :
+                 place.status === 'PENDING' ? 'Pendiente' : 'Inactivo' }}
             </span>
-          } @empty {
-            <span class="no-items">Sin elementos registrados</span>
-          }
+          </div>
+
+          <p class="location">
+            <span>Ubicación:</span> {{ place.location }}
+          </p>
+
+          <div class="place-details">
+            <span>Capacidad: {{ place.capacity }} personas</span>
+            <span>Categoría: {{ place.category }}</span>
+            <span>Horario: {{ place.openingTime }} - {{ place.closingTime }}</span>
+          </div>
+
+          <div class="card-actions">
+
+            <button type="button"
+              class="delete-button"
+              (click)="reservar(place.name, place.id)">
+              Reservar
+            </button>
+
+            <a class="delete-button"
+              [routerLink]="['/client', { outlets: { panel: ['place', place.id] } }]">
+              Ver detalles
+            </a>
+
+          </div>
+
+        </article>
+
+      } @empty {
+        <div class="empty-message">
+          <h3>No hay espacios disponibles</h3>
         </div>
+      }
 
-        <div class="card-actions">
+    </div>
 
-          <button
-            type="button"
-            class="delete-button"
-            (click)="reservar(place.name, place.id)"
-          >
-            Reservar
-          </button>
-
-        </div>
-
-      </article>
-
-    } @empty {
-
-      <div class="empty-message">
-        <h3>No hay espacios Disponibles</h3>
-      </div>
-
-    }
-
-    @if(visible()){
-      <div>
-        <app-reservation-form 
-        [place]="placeN()"
-        [placeId]="placeId()"  
-        (cerrar)="visible.set($event)"></app-reservation-form>
-      </div>
-    }
+    <!-- Panel de detalles: se muestra al lado del listado -->
+    <div class="details-panel">
+      <router-outlet name="panel"></router-outlet>
+    </div>
 
   </div>
+
+  @if(visible()) {
+    <app-reservation-form
+      [place]="placeN()"
+      [placeId]="placeId()"
+      (cerrar)="visible.set($event)">
+    </app-reservation-form>
+  }
 
 </section>

@@ -7,10 +7,17 @@
             <a 
               [routerLink]="item.route"
               routerLinkActive="bg-slate-50 text-slate-900"
+              [routerLinkActiveOptions]="{exact: true}"
               class="rounded-t-lg px-4 py-2 text-sm font-semibold text-slate-300 hover:text-white">
                 {{item.label}}
             </a>
         }
+        <a 
+         routerLink="/ayuda"
+         routerLinkActive="bg-slate-50 text-slate-900"
+         [routerLinkActiveOptions]="{exact: true}"
+         class="rounded-t-lg px-4 py-2 text-sm font-semibold text-slate-300 hover:text-white"
+        >Ayuda</a>
 
         <button
           class="rounded-t-lg px-4 py-2 text-sm font-semibold text-slate-300 hover:text-white" 

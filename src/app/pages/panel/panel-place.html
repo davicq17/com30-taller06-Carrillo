@@ -1,0 +1,54 @@
+@if(place(); as p){
+    
+    <div class="place-detail-container">
+
+    <article class="place-card">
+        
+        <div class="card-header">
+            <h3>{{ p.name }}</h3>
+            
+            <span
+             class="status"
+             [ngClass]="p.status.toLowerCase()">
+             {{ p.status === 'AVAILABLE' ? 'Disponible' :
+                p.status === 'PENDING' ? 'Pendiente' : 'Inactivo' }}
+            </span>
+        </div>
+
+        <p class="location">
+          <span>Ubicación:</span> {{ p.location }}
+        </p>
+
+        <div class="place-details">
+          <span>Capacidad: {{ p.capacity }} personas</span>
+          <span>Categoría: {{ p.category }}</span>
+          <span>Horario: {{ p.openingTime }} - {{ p.closingTime }}</span>
+        </div>
+
+        <p class="description">
+          {{ p.description }}
+        </p>
+
+        <div class="items-info">
+          <strong>Elementos registrados:</strong>
+
+          @for (item of p.items; track $index) {
+            <span class="item-tag">
+              {{ item.name }} ({{ item.quantity }})
+            </span>
+          } @empty {
+            <span class="no-items">Sin elementos registrados</span>
+          }
+        </div>
+
+        <div class="card-actions">
+            <a class="delete-button" [routerLink]="['/client',{ outlets:{ panel: null } }]">
+                Cerrar panel
+            </a>
+        </div>
+
+      </article>
+      </div>
+}@else {
+    <p>No existe el producto</p>
+}

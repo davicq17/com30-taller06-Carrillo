@@ -38,6 +38,10 @@ export class PlaceService {
         this.guardarCambios();
     }
 
+    obtener(id: string): Place | undefined{
+        return this.places().find((p) => p.id === id);
+    }
+
     cambiarEstado(id: string, status: PlaceStatus): void {
         this._places.update(places => 
             places.map(place => 
