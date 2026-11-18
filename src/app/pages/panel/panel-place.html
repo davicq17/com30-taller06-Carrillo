@@ -10,8 +10,12 @@
             <span
              class="status"
              [ngClass]="p.status.toLowerCase()">
-             {{ p.status === 'AVAILABLE' ? 'Disponible' :
-                p.status === 'PENDING' ? 'Pendiente' : 'Inactivo' }}
+             @switch(p.status){
+                @case('AVAILABLE') {Disponible}
+                @case('PENDING') {Pendiente}
+                @case('RESERVED') {Reservado}
+                @default {Inactivo}
+             }
             </span>
         </div>
 
@@ -42,7 +46,7 @@
         </div>
 
         <div class="card-actions">
-            <a class="delete-button" [routerLink]="['/client',{ outlets:{ panel: null } }]">
+            <a class="delete-button" [routerLink]="volver()">
                 Cerrar panel
             </a>
         </div>
@@ -50,5 +54,11 @@
       </article>
       </div>
 }@else {
-    <p>No existe el producto</p>
+    <div class="place-detail-container">
+        <div class="not-found-place">
+            <h3>Espacio no encontrado</h3>
+            <p>No existe un espacio con el código <b>{{ id() }}</b>.</p>
+            <a class="delete-button" [routerLink]="volver()">Volver</a>
+        </div>
+    </div>
 }

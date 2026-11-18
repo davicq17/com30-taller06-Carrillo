@@ -40,20 +40,7 @@
   font-size: 14px;
 }
 
-/* DISTRIBUCIÓN GENERAL */
-
-.places-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-items: start;
-  gap: 22px;
-  width: 100%;
-}
-
-/* Cuando hay un lugar seleccionado, el panel de detalles va al lado del listado */
-.places-layout:has(.details-panel app-panel-place) {
-  grid-template-columns: minmax(0, 1fr) 310px;
-}
+/* DISTRIBUCIÓN GENERAL: definida en src/styles.css (compartida con el admin) */
 
 /* LISTADO DE TARJETAS */
 
@@ -213,27 +200,7 @@
   background: #fecaca;
 }
 
-/* PANEL DE DETALLES */
-
-.details-panel {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  position: sticky;
-  top: 20px;
-}
-
-/* Sin lugar seleccionado el panel no ocupa espacio */
-.details-panel:not(:has(app-panel-place)) {
-  display: none;
-}
-
-/* El componente renderizado por el router */
-
-.details-panel > router-outlet + * {
-  display: block;
-  width: 100%;
-}
+/* PANEL DE DETALLES: estilos compartidos en src/styles.css */
 
 /* LISTA VACÍA */
 
@@ -275,14 +242,6 @@
 /* RESPONSIVE */
 
 @media (max-width: 900px) {
-  .places-layout {
-    gap: 15px;
-  }
-
-  .places-layout:has(.details-panel app-panel-place) {
-    grid-template-columns: minmax(0, 1fr) 260px;
-  }
-
   .places-grid {
     grid-template-columns: 1fr;
   }
@@ -291,15 +250,6 @@
 @media (max-width: 650px) {
   :host {
     padding: 18px 12px;
-  }
-
-  .places-layout,
-  .places-layout:has(.details-panel app-panel-place) {
-    grid-template-columns: 1fr;
-  }
-
-  .details-panel {
-    position: static;
   }
 
   .places-grid {

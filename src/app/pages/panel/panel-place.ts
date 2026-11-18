@@ -13,6 +13,7 @@ export class PanelPlace {
     private readonly placeService = inject(PlaceService);
 
     readonly id = input.required<string>();
+    readonly volver = input<string>('/client');
     readonly place = computed(() =>
         this.placeService.obtener(this.id())
     );
