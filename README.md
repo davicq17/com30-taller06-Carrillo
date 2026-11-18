@@ -1,59 +1,118 @@
-# Com30Taller06Carrillo
+# Taller 06 — Reserva de espacios (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.0.
+Aplicación Angular con dos roles (**administrador** y **cliente**) para registrar espacios,
+consultar su detalle y gestionar reservaciones. El enrutamiento está separado por rol y usa
+carga diferida.
 
-## Development server
+## Tecnologías
 
-To start a local development server, run:
+- Angular 22 (standalone components, signals, nueva sintaxis de control de flujo)
+- Angular Router con `withComponentInputBinding()`
+- TypeScript 6
+- Tailwind CSS 4 (vistas de reservaciones y layout general)
+- Vitest
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Ejecución
 
 ```bash
-ng generate component component-name
+npm install
+npm start        # http://localhost:4200
+npm run build    # build de producción
+npm test         # pruebas unitarias
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Estructura del routing
 
-```bash
-ng generate --help
+```
+app.routes.ts
+├── ''  → redirectTo: 'places' (pathMatch: 'full')
+├── ''  → loadChildren: pages/admin.routes.ts
+├── ''  → loadChildren: pages/client.routes.ts
+├── 'ayuda' → NotFound
+└── '**'    → NotFound (comodín al final)
 ```
 
-## Building
+- `provideRouter(routes, withComponentInputBinding())` en `app.config.ts`.
+- Cada ruta declara su `title`.
+- Un único `<router-outlet />` principal en `App`; el detalle usa un outlet nombrado
+  (`name="panel"`) dentro del listado correspondiente.
+- No se usan `href` internos: toda la navegación interna pasa por `routerLink` / `router.navigate`.
 
-To build the project run:
+## Tabla A — Rutas
 
-```bash
-ng build
+| Ruta | Componente | Título | Rol | Carga |
+|---|---|---|---|---|
+| `/` | — (redirección) | — | — | — |
+| `/places` | `PlaceList` | Lugares | admin | `loadChildren` |
+| `/places?estado=AVAILABLE` | `PlaceList` + filtro | Lugares | admin | `loadChildren` |
+| `/places/new` | `PlaceForm` | Nuevo · lugar | admin | `loadChildren` |
+| `/places(panel:place/:id)` | `PanelPlace` | Detalle · lugar | admin | `loadChildren` |
+| `/reservations` | `ReservationList` | Reservaciones | admin | `loadChildren` |
+| `/reservation/new` | `ReservationForm` | Nueva · reservacion | admin | `loadChildren` |
+| `/client` | `Client` | cliente | client | `loadChildren` |
+| `/client(panel:place/:id)` | `PanelPlace` | Detalle · lugar | client | `loadChildren` |
+| `/my-reservations` | `ClientReservations` | mis-reservas | client | **`loadComponent`** |
+| `/ayuda` | `NotFound` | Ayuda | — | eager |
+| ruta desconocida | `NotFound` | No encontrada | — | eager (`**`) |
+
+### Filtro por parámetro de consulta
+
+`PlaceList` recibe el query param mediante un `input()` con el mismo nombre:
+
+```ts
+readonly estado = input<string>('');
+readonly placesFiltrados = computed(() => {
+  const filtro = this.estado().trim().toUpperCase();
+  return filtro
+    ? this.places().filter(place => place.status === filtro)
+    : this.places();
+});
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Los enlaces del filtro usan `[queryParams]="{estado: 'AVAILABLE'}"`, por lo que el estado
+viaja en la URL (`/places?estado=AVAILABLE`) y **sobrevive a un F5**. Un valor sin registros
+muestra el bloque `@empty`.
 
-## Running unit tests
+### Panel de detalle reutilizable
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+El mismo componente `PanelPlace` se usa en las dos vistas:
 
-```bash
-ng test
+- Cliente: `/client(panel:place/:id)`.
+- Administrador: `/places(panel:place/:id)`.
+
+El parámetro `id` llega a `input.required<string>()` y un `computed` busca el registro en
+`PlaceService`. Si el código no existe, el panel muestra "Espacio no encontrado" con el código
+solicitado y un enlace de vuelta. El enlace "Cerrar panel" usa el `data.volver` de cada ruta.
+
+### Navegación programática
+
+Al guardar un espacio válido, `PlaceForm` navega al detalle del registro recién creado:
+
+```ts
+const nuevo = this.placeService.agregar(formValue);
+this.router.navigate(['/places', { outlets: { panel: ['place', nuevo.id] } }]);
 ```
 
-## Running end-to-end tests
+### Carga diferida con `loadComponent`
 
-For end-to-end (e2e) testing, run:
+La ruta `/my-reservations` se carga con `loadComponent`; su chunk aparece en
+**F12 > Red** al entrar por primera vez a esa vista.
 
-```bash
-ng e2e
-```
+## Tabla B — Casos de prueba
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+| Caso | Acción | Resultado esperado |
+|---|---|---|
+| C1 | Abrir `/` | Redirige a `/places` mostrando el listado. |
+| C2 | Entrar a `/places?estado=AVAILABLE` | Solo aparecen espacios disponibles. |
+| C3 | Recargar (F5) con el filtro en la URL | El filtro se mantiene. |
+| C4 | Entrar a `/places?estado=NOEXISTE` | Se muestra el mensaje `@empty` de filtro sin resultados. |
+| C5 | Abrir `/places(panel:place/:id)` con un id válido | El detalle muestra los datos del espacio. |
+| C6 | Abrir el detalle con un id inexistente | Mensaje "Espacio no encontrado" con el código pedido. |
+| C7 | Abrir una URL desconocida | Vista 404 con la dirección solicitada y enlace "Volver al inicio". |
+| C8 | Registrar un espacio válido | Se navega al detalle del registro creado. |
+| C9 | Entrar a `/my-reservations` con F12 > Red abierto | Se descarga un chunk nuevo por `loadComponent`. |
 
-## Additional Resources
+## Enlace del proyecto
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Repositorio: _(pegar aquí el enlace que abra en una ventana privada)_
+- Aplicación local: http://localhost:4200
