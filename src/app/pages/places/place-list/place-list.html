@@ -3,7 +3,7 @@
   <header class="list-header">
     <div>
       <h2>Espacios registrados</h2>
-      <p>Administra los espacios disponibles.</p>
+      <p>Administra los espacios.</p>
     </div>
 
     <a routerLink="/places/new" class="new-place-button">
@@ -11,7 +11,7 @@
     </a>
   </header>
 
-  <!-- Filtro por parámetro de consulta: /places?estado=AVAILABLE -->
+  
   <nav class="filter-bar" aria-label="Filtrar por estado">
     <a [routerLink]="['/places']"
        [class.active]="!filtroActivo()">
@@ -73,22 +73,6 @@
             <span>Horario: {{ place.openingTime }} - {{ place.closingTime }}</span>
           </div>
 
-          <p class="description">
-            {{ place.description }}
-          </p>
-
-          <div class="items-info">
-            <strong>Elementos registrados:</strong>
-
-            @for (item of place.items; track $index) {
-              <span class="item-tag">
-                {{ item.name }} ({{ item.quantity }})
-              </span>
-            } @empty {
-              <span class="no-items">Sin elementos registrados</span>
-            }
-          </div>
-
           <div class="card-actions">
 
             <select
@@ -138,7 +122,7 @@
 
     </div>
 
-    <!-- Panel de detalle compartido con la vista del cliente -->
+
     <div class="details-panel">
       <router-outlet name="panel"></router-outlet>
     </div>

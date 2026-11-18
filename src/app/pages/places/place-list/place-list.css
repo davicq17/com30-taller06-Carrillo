@@ -15,7 +15,6 @@
   box-sizing: border-box;
 }
 
-/* Encabezado */
 
 .list-header {
   display: flex;
@@ -51,7 +50,6 @@
   background: #1d4ed8;
 }
 
-/* Filtro por estado (query params) */
 
 .filter-bar {
   display: flex;
@@ -81,9 +79,6 @@
   color: white;
 }
 
-/* Distribución listado + panel: estilos compartidos en src/styles.css */
-
-/* Cuadrícula */
 
 .places-grid {
   display: grid;
@@ -92,7 +87,6 @@
   align-items: start;
 }
 
-/* Tarjetas */
 
 .place-card {
   padding: 17px;
@@ -108,7 +102,6 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-/* Nombre y estado */
 
 .card-header {
   display: flex;
@@ -148,7 +141,6 @@
   color: #991b1b;
 }
 
-/* Información */
 
 .location {
   margin: 0 0 12px;
@@ -179,7 +171,6 @@
   overflow-wrap: anywhere;
 }
 
-/* Elementos */
 
 .items-info {
   display: flex;
@@ -261,9 +252,6 @@
   background: #c7d2fe;
 }
 
-/* Panel de detalle: estilos compartidos en src/styles.css */
-
-/* Lista vacía */
 
 .empty-message {
   grid-column: 1 / -1;

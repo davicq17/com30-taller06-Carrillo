@@ -143,20 +143,21 @@
   font-size: 11px;
 }
 
-.delete-button {
+.detail-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px 11px;
-  border: none;
   border-radius: 6px;
-  background: #f1d2d2;
-  color: #531cb9;
+  background: #e0e7ff;
+  color: #3730a3;
   font-size: 11px;
   font-weight: bold;
   text-decoration: none;
-  cursor: pointer;
 }
 
-.delete-button:hover {
-  background: #fecaca;
+.detail-button:hover {
+  background: #c7d2fe;
 }
 
 /* Código inexistente */

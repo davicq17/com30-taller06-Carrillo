@@ -9,7 +9,6 @@
 
   <div class="places-layout">
 
-    <!-- Listado de tarjetas -->
     <div class="places-grid">
 
       @for (place of places(); track place.id) {
@@ -44,7 +43,7 @@
               Reservar
             </button>
 
-            <a class="delete-button"
+            <a class="detail-button"
               [routerLink]="['/client', { outlets: { panel: ['place', place.id] } }]">
               Ver detalles
             </a>
@@ -56,12 +55,13 @@
       } @empty {
         <div class="empty-message">
           <h3>No hay espacios disponibles</h3>
+          <p>Espere a que se libere un lugar o se registre un nuevo lugar..</p>
         </div>
       }
 
     </div>
 
-    <!-- Panel de detalles: se muestra al lado del listado -->
+
     <div class="details-panel">
       <router-outlet name="panel"></router-outlet>
     </div>

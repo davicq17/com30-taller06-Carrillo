@@ -6,10 +6,8 @@
   background: #f4f6f9;
   font-family: Arial, Helvetica, sans-serif;
   color: #263238;
-  box-sizing: border-box;
 }
 
-/* CONTENEDOR PRINCIPAL */
 
 .places-container {
   width: 100%;
@@ -18,7 +16,6 @@
   box-sizing: border-box;
 }
 
-/* ENCABEZADO */
 
 .list-header {
   display: flex;
@@ -40,24 +37,14 @@
   font-size: 14px;
 }
 
-/* DISTRIBUCIÓN GENERAL: definida en src/styles.css (compartida con el admin) */
-
-/* LISTADO DE TARJETAS */
-
 .places-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   align-items: start;
   gap: 18px;
-  min-width: 0;
 }
 
-/* TARJETAS */
-
 .place-card {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
   padding: 17px;
   background: white;
   border: 1px solid #e2e8f0;
@@ -71,7 +58,6 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-/* NOMBRE Y ESTADO */
 
 .card-header {
   display: flex;
@@ -111,7 +97,6 @@
   color: #991b1b;
 }
 
-/* INFORMACIÓN */
 
 .location {
   margin: 0 0 12px;
@@ -142,7 +127,6 @@
   overflow-wrap: anywhere;
 }
 
-/* ELEMENTOS */
 
 .items-info {
   display: flex;
@@ -200,9 +184,23 @@
   background: #fecaca;
 }
 
-/* PANEL DE DETALLES: estilos compartidos en src/styles.css */
+.detail-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 11px;
+  border-radius: 6px;
+  background: #e0e7ff;
+  color: #3730a3;
+  font-size: 11px;
+  font-weight: bold;
+  text-decoration: none;
+}
 
-/* LISTA VACÍA */
+.detail-button:hover {
+  background: #c7d2fe;
+}
+
 
 .empty-message {
   grid-column: 1 / -1;

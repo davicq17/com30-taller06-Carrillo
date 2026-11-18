@@ -6,11 +6,7 @@ import { ReservationForm } from '../register-form/reservation-form/reservation-f
 import { PanelPlace } from './panel/panel-place';
 
 export const adminRoutes: Routes = [
-    {
-        path: 'places/new',
-        component: PlaceForm,
-        title: 'Nuevo · lugar'
-    },
+    {path: 'places/new',component: PlaceForm,title: 'Nuevo · lugar'},
     {
         path: 'places',
         component: PlaceList,

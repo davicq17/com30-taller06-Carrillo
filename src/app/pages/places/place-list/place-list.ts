@@ -16,8 +16,6 @@ export class PlaceList {
 
   private readonly placeService = inject(PlaceService);
 
-  // Con withComponentInputBinding() el query param ?estado=... llega aquí
-  // (undefined cuando no está presente en la URL)
   readonly estado = input<string | undefined>('');
 
   readonly places = this.placeService.places;

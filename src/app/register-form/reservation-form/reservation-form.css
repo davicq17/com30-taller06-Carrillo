@@ -2,7 +2,6 @@
 input { padding: .4rem .6rem; border: 1px solid #cbd5e1; border-radius: .4rem; }
 .error { margin-top: .25rem; font-size: .8rem; color: #b91c1c; }
 
-/* Botón registrar */
 button[type="submit"] {
   display: block;
   width: 100%;
