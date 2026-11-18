@@ -44,12 +44,14 @@ export class PlaceForm {
 
     const formValue = this.placeForm.getRawValue();
 
-    this.placeService.agregar(formValue);
+    const nuevo = this.placeService.agregar(formValue);
 
     this.placeForm.reset();
     this.items.clear();
     this.addItem();
-    this.router.navigate(['places']);
+
+    // Ir al detalle del registro recién creado
+    this.router.navigateByUrl(`/places/(panel:place/${nuevo.id})`);
 
     console.log('Espacio registrado correctamente')
   }

@@ -23,7 +23,7 @@ export class PlaceService {
         ).length
     );
 
-    agregar(place: Omit<Place,'id' | 'status'>): void {
+    agregar(place: Omit<Place,'id' | 'status'>): Place {
         const newPLace: Place = {
             ...place,
             id: crypto.randomUUID(),
@@ -36,6 +36,8 @@ export class PlaceService {
         ]);
 
         this.guardarCambios();
+
+        return newPLace;
     }
 
     obtener(id: string): Place | undefined{
