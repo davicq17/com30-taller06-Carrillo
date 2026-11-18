@@ -1,4 +1,3 @@
-
 <section class="places-container">
 
   <header class="list-header">
@@ -12,90 +11,137 @@
     </a>
   </header>
 
-  <div class="places-grid">
+  <!-- Filtro por parámetro de consulta: /places?estado=AVAILABLE -->
+  <nav class="filter-bar" aria-label="Filtrar por estado">
+    <a [routerLink]="['/places']"
+       [class.active]="!filtroActivo()">
+      Todos
+    </a>
+    <a [routerLink]="['/places']"
+       [queryParams]="{estado: 'AVAILABLE'}"
+       [class.active]="filtroActivo() === 'AVAILABLE'">
+      Disponibles
+    </a>
+    <a [routerLink]="['/places']"
+       [queryParams]="{estado: 'PENDING'}"
+       [class.active]="filtroActivo() === 'PENDING'">
+      Pendientes
+    </a>
+    <a [routerLink]="['/places']"
+       [queryParams]="{estado: 'RESERVED'}"
+       [class.active]="filtroActivo() === 'RESERVED'">
+      Reservados
+    </a>
+    <a [routerLink]="['/places']"
+       [queryParams]="{estado: 'INACTIVE'}"
+       [class.active]="filtroActivo() === 'INACTIVE'">
+      Inactivos
+    </a>
+  </nav>
 
-    @for (place of places(); track place.id) {
+  <div class="places-layout">
 
-      <article class="place-card">
+    <div class="places-grid">
 
-        <div class="card-header">
-          <h3>{{ place.name }}</h3>
+      @for (place of placesFiltrados(); track place.id) {
 
-          <span
-            class="status"
-            [ngClass]="place.status.toLowerCase()"
-          >
-          @switch(place.status){
-            @case('AVAILABLE') {Disponible}
-            @case('PENDING'){Pendiente}
-            @case('RESERVED'){Reservado}
-            @default {Inactivo}
-          }
-          </span>
-        </div>
+        <article class="place-card">
 
-        <p class="location">
-          <span>Ubicación:</span> {{ place.location }}
-        </p>
+          <div class="card-header">
+            <h3>{{ place.name }}</h3>
 
-        <div class="place-details">
-          <span>Capacidad: {{ place.capacity }} personas</span>
-          <span>Categoría: {{ place.category }}</span>
-          <span>Horario: {{ place.openingTime }} - {{ place.closingTime }}</span>
-        </div>
-
-        <p class="description">
-          {{ place.description }}
-        </p>
-
-        <div class="items-info">
-          <strong>Elementos registrados:</strong>
-
-          @for (item of place.items; track $index) {
-            <span class="item-tag">
-              {{ item.name }} ({{ item.quantity }})
+            <span
+              class="status"
+              [ngClass]="place.status.toLowerCase()"
+            >
+            @switch(place.status){
+              @case('AVAILABLE') {Disponible}
+              @case('PENDING'){Pendiente}
+              @case('RESERVED'){Reservado}
+              @default {Inactivo}
+            }
             </span>
-          } @empty {
-            <span class="no-items">Sin elementos registrados</span>
+          </div>
+
+          <p class="location">
+            <span>Ubicación:</span> {{ place.location }}
+          </p>
+
+          <div class="place-details">
+            <span>Capacidad: {{ place.capacity }} personas</span>
+            <span>Categoría: {{ place.category }}</span>
+            <span>Horario: {{ place.openingTime }} - {{ place.closingTime }}</span>
+          </div>
+
+          <p class="description">
+            {{ place.description }}
+          </p>
+
+          <div class="items-info">
+            <strong>Elementos registrados:</strong>
+
+            @for (item of place.items; track $index) {
+              <span class="item-tag">
+                {{ item.name }} ({{ item.quantity }})
+              </span>
+            } @empty {
+              <span class="no-items">Sin elementos registrados</span>
+            }
+          </div>
+
+          <div class="card-actions">
+
+            <select
+              #statusSelect
+              [value]="place.status"
+              (change)="cambiarEstado(
+                place.id,
+                $any(statusSelect.value)
+              )"
+            >
+              <option value="AVAILABLE">Disponible</option>
+              <option value="PENDING">Pendiente</option>
+              <option value="RESERVED">Reservado</option>
+              <option value="INACTIVE">Inactivo</option>
+            </select>
+
+            <a class="detail-button"
+               [routerLink]="['/places', { outlets: { panel: ['place', place.id] } }]">
+              Ver detalles
+            </a>
+
+            <button
+              type="button"
+              class="delete-button"
+              (click)="eliminar(place.id)"
+            >
+              Eliminar
+            </button>
+
+          </div>
+
+        </article>
+
+      } @empty {
+
+        <div class="empty-message">
+          @if (filtroActivo()) {
+            <h3>No hay espacios con estado "{{ filtroActivo() }}"</h3>
+            <p>Prueba con otro filtro o consulta todos los espacios.</p>
+          } @else {
+            <h3>No hay espacios registrados</h3>
+            <p>Registra un espacio para que aparezca en este listado.</p>
           }
         </div>
 
-        <div class="card-actions">
+      }
 
-          <select
-            #statusSelect
-            [value]="place.status"
-            (change)="cambiarEstado(
-              place.id,
-              $any(statusSelect.value)
-            )"
-          >
-            <option value="AVAILABLE">Disponible</option>
-            <option value="PENDING">Pendiente</option>
-            <option value="RESERVED">Reservado</option>
-            <option value="INACTIVE">Inactivo</option>
-          </select>
+    </div>
 
-          <button
-            type="button"
-            class="delete-button"
-            (click)="eliminar(place.id)"
-          >
-            Eliminar
-          </button>
-
-        </div>
-
-      </article>
-
-    } @empty {
-
-      <div class="empty-message">
-        <h3>No hay espacios registrados</h3>
-        <p>Registra un espacio para que aparezca en este listado.</p>
-      </div>
-
-    }
+    <!-- Panel de detalle compartido con la vista del cliente -->
+    <div class="details-panel">
+      <router-outlet name="panel"></router-outlet>
+    </div>
 
   </div>
 

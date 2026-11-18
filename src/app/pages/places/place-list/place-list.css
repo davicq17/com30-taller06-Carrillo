@@ -9,8 +9,10 @@
 }
 
 .places-container {
-  max-width: 1200px;
-  margin: auto;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 /* Encabezado */
@@ -48,6 +50,38 @@
 .new-place-button:hover {
   background: #1d4ed8;
 }
+
+/* Filtro por estado (query params) */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filter-bar a {
+  padding: 7px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  background: white;
+  color: #475569;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.filter-bar a:hover {
+  border-color: #94a3b8;
+}
+
+.filter-bar a.active {
+  background: #1e293b;
+  border-color: #1e293b;
+  color: white;
+}
+
+/* Distribución listado + panel: estilos compartidos en src/styles.css */
 
 /* Cuadrícula */
 
@@ -178,6 +212,7 @@
 
 .card-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   padding-top: 12px;
   border-top: 1px solid #e2e8f0;
@@ -208,6 +243,25 @@
 .delete-button:hover {
   background: #fecaca;
 }
+
+.detail-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 11px;
+  border-radius: 6px;
+  background: #e0e7ff;
+  color: #3730a3;
+  font-size: 11px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.detail-button:hover {
+  background: #c7d2fe;
+}
+
+/* Panel de detalle: estilos compartidos en src/styles.css */
 
 /* Lista vacía */
 
@@ -248,7 +302,7 @@
 
 /* Responsive */
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   :host {
     padding: 18px 12px;
   }
