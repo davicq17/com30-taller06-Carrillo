@@ -1,16 +1,27 @@
 import { Routes } from '@angular/router';
 import { Client } from './client/client/client';
-import { ClientReservations } from './client/client-reservations/client-reservations';
 import { PanelPlace } from './panel/panel-place';
 
 export const clientRoutes: Routes = [
     {
         path: 'client',
         component: Client,
-        title: 'clinte',
+        title: 'cliente',
         children: [
-            {path: 'place/:id', component: PanelPlace, outlet: 'panel'}
+            {
+                path: 'place/:id',
+                component: PanelPlace,
+                outlet: 'panel',
+                title: 'Detalle · lugar',
+                data: {volver: '/client'}
+            }
         ]
     },
-    {path: 'my-reservations',component: ClientReservations, title: 'mis-reservas'}
+    {
+        path: 'my-reservations',
+        loadComponent: () =>
+            import('./client/client-reservations/client-reservations')
+                .then(m => m.ClientReservations),
+        title: 'mis-reservas'
+    }
 ];
