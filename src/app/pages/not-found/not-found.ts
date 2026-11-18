@@ -1,9 +1,9 @@
 import { Component, inject } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
     selector:'app-not-found',
-    imports: [],
+    imports: [RouterLink],
     standalone: true,
     templateUrl: './not-found.html',
     styleUrl: './not-found.css'
