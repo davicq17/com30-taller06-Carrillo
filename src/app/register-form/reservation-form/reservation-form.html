@@ -1,6 +1,14 @@
-<h2>Reservar</h2>
-<form [formGroup]="reservationForm" (ngSubmit)="onSumit()">
-    <div>
+<div class="reservation-card">
+
+  <header class="reservation-header">
+    <p class="eyebrow">Reservación</p>
+    <h3>Nueva reserva</h3>
+    <p class="hint">Completa los datos del evento para este espacio.</p>
+  </header>
+
+  <form [formGroup]="reservationForm" (ngSubmit)="onSumit()">
+
+    <div class="field">
         <label class="campo" for="placeName">Nombre del espacio</label>
         <input  id="placeName" type="text" 
          formControlName="placeName">
@@ -16,7 +24,7 @@
         }
      }
 
-    <div>
+    <div class="field">
         <label class="campo" for="responsible">Responsable</label>
         <input id="responsible" type="text" 
         formControlName="responsible" placeholder="Persona responsable">
@@ -34,7 +42,7 @@
         }
      }
 
-    <div>
+    <div class="field">
         <label class="campo" for="date">Fecha de reserva</label>
         <input id="date" type="date" formControlName="date">
     </div>
@@ -43,13 +51,13 @@
         <p class="error">La fecha es Obligatoria.</p>
      }
 
-    <div>
+    <div class="field">
         <label class="campo" for="startTime">Hora de Inicio del evento</label>
         <input id="startTime" type="time"
          formControlName="startTime">
     </div>
 
-    <div>
+    <div class="field">
         <label class="campo" for="endTime">Hora del cierre del evento</label>
         <input id="endTime" type="time" 
          formControlName="endTime">
@@ -66,7 +74,7 @@
         </p>
      }
 
-    <div>
+    <div class="field">
         <label class="campo" for="attendees">Numero de asistentes</label>
         <input id="attendees" type="number"
          formControlName="attendees">
@@ -81,13 +89,18 @@
             <p class="error">Los asistentes deben ser como minimo 1.</p>
         }
      }
-     <button
-     type="submit">
-      Reservar
-     </button>
-</form>
- <button
-      class="ml-1 mt-6 rounded-md bg-slate-800 px-3 py-1 text-xs font-bold text-white disabled:opacity-30" 
-      (click)="cerrar.emit(false)">
+
+    <div class="form-actions">
+      <button type="submit" class="submit-button">
+        Reservar
+      </button>
+
+      <button type="button" class="close-button"
+        (click)="cerrar.emit(false)">
         Cerrar
-</button>
+      </button>
+    </div>
+
+  </form>
+
+</div>

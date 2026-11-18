@@ -64,16 +64,16 @@
 
     <div class="details-panel">
       <router-outlet name="panel"></router-outlet>
+
+      @if(visible()) {
+        <app-reservation-form
+          [place]="placeN()"
+          [placeId]="placeId()"
+          (cerrar)="visible.set($event)">
+        </app-reservation-form>
+      }
     </div>
 
   </div>
-
-  @if(visible()) {
-    <app-reservation-form
-      [place]="placeN()"
-      [placeId]="placeId()"
-      (cerrar)="visible.set($event)">
-    </app-reservation-form>
-  }
 
 </section>

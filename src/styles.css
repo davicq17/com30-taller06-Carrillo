@@ -16,6 +16,10 @@
   grid-template-columns: minmax(0, 1fr) 310px;
 }
 
+.places-layout:has(.details-panel app-reservation-form) {
+  grid-template-columns: minmax(0, 1fr) 340px;
+}
+
 .details-panel {
   display: block;
   width: 100%;
@@ -24,13 +28,18 @@
   top: 20px;
 }
 
-.details-panel:not(:has(app-panel-place)) {
+.details-panel:not(:has(app-panel-place, app-reservation-form)) {
   display: none;
 }
 
 .details-panel > router-outlet + * {
   display: block;
   width: 100%;
+}
+
+.details-panel:has(app-panel-place) app-reservation-form {
+  display: block;
+  margin-top: 18px;
 }
 
 @media (max-width: 900px) {
@@ -41,11 +50,16 @@
   .places-layout:has(.details-panel app-panel-place) {
     grid-template-columns: minmax(0, 1fr) 260px;
   }
+
+  .places-layout:has(.details-panel app-reservation-form) {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
 }
 
 @media (max-width: 650px) {
   .places-layout,
-  .places-layout:has(.details-panel app-panel-place) {
+  .places-layout:has(.details-panel app-panel-place),
+  .places-layout:has(.details-panel app-reservation-form) {
     grid-template-columns: 1fr;
   }
 

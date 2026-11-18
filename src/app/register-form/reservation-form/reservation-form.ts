@@ -52,7 +52,7 @@ export class ReservationForm {
       placeId: this.placeId()
     });
 
-    this.reservationForm.reset();
-    this.cerrar.emit(true);
+    this.reservationForm.reset({ placeName: this.place() });
+    this.cerrar.emit(false);
   }
 }

@@ -1,16 +1,132 @@
-.campo { display: grid; gap: .25rem; margin-top: .7rem; font-size: .85rem; font-weight: 600; max-width: 22rem; }
-input { padding: .4rem .6rem; border: 1px solid #cbd5e1; border-radius: .4rem; }
-.error { margin-top: .25rem; font-size: .8rem; color: #b91c1c; }
-
-button[type="submit"] {
+:host {
   display: block;
   width: 100%;
-  margin-top: 25px;
-  background-color: #2563eb;
-  color: #ffffff;
-  font-size: 15px;
 }
 
-button[type="submit"]:hover {
-  background-color: #1d4ed8;
+/* Card de reserva (mismo lenguaje visual que el panel de detalle) */
+
+.reservation-card {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 18px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+/* Encabezado */
+
+.reservation-header {
+  margin-bottom: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reservation-header h3 {
+  margin: 0 0 5px;
+  color: #1e293b;
+  font-size: 17px;
+}
+
+.hint {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Campos */
+
+.field {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.campo {
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #1e293b;
+  font-size: 13px;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Mensajes de error */
+
+.error {
+  margin: 5px 0 0;
+  color: #b91c1c;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+/* Acciones */
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.submit-button {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background: #1d4ed8;
+}
+
+.close-button {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #f1d2d2;
+  color: #531cb9;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background: #fecaca;
 }
