@@ -1,139 +1,166 @@
-<div class="reservation-card">
+<section class="parcial-container">
 
-  <header class="reservation-header">
-    <p class="eyebrow">Registro Producto</p>
-    <p class="hint">Completa los datos del producto.</p>
-  </header>
+  <div class="places-layout">
 
-  <form [formGroup]="parcialForm" (ngSubmit)="onSubmit()">
+    <div class="parcial-main">
 
-    <div class="field">
-        <label class="campo" for="codigo">Código</label>
-        <input  id="codigo" type="text" 
-         formControlName="codigo">
-    </div>
-    @if (parcialForm.controls.codigo.invalid &&
-     (parcialForm.controls.codigo.touched || parcialForm.controls.codigo.dirty)) {
-        @if (parcialForm.controls.codigo.hasError('required')) {
-            <p class="error">El código es obligatorio</p>
-        }
+      <div class="reservation-card">
 
-        @if (parcialForm.controls.codigo.hasError('pattern')) {
-            <p class="error">El código debe 2 letras Mayúsculas 3 números.</p>
-        }
-     }
+        <header class="reservation-header">
+          <p class="eyebrow">Registro Producto</p>
+          <p class="hint">Completa los datos del producto.</p>
+        </header>
 
-    <div class="field">
-        <label class="campo" for="cantidad">Cantidad</label>
-        <input id="cantidad" type="number" 
-        formControlName="cantidad">
-    </div>
-    @if (parcialForm.controls.cantidad.invalid &&
-     (parcialForm.controls.cantidad.touched || parcialForm.controls.cantidad.dirty)) {
-        @if (parcialForm.controls.cantidad.hasError('required')) {
-            <p class="error">La cantidad es obligatoriar</p>
-        }
-        @if (parcialForm.controls.cantidad.hasError('min')) {
-            <p class="error">La cantidad mínima es 1</p>
-        }
-        @if (parcialForm.controls.cantidad.hasError('max')) {
-            <p class="error">La cantidad maxima es 24</p>
-        }
-        @if (parcialForm.controls.cantidad.hasError('noEsMultiplo')) {
-            <p class="error">La cantidad debe ser múltiplo de 4.</p>
-        }
-     }
+        <form [formGroup]="parcialForm" (ngSubmit)="onSubmit()">
 
-    <div class="field">
-        <label class="campo" for="desde">Desde</label>
-        <input id="desde" type="number"
-         formControlName="desde">
-    </div>
+          <div class="field">
+              <label class="campo" for="codigo">Código</label>
+              <input  id="codigo" type="text" 
+               formControlName="codigo">
+          </div>
+          @if (parcialForm.controls.codigo.invalid &&
+           (parcialForm.controls.codigo.touched || parcialForm.controls.codigo.dirty)) {
+              @if (parcialForm.controls.codigo.hasError('required')) {
+                  <p class="error">El código es obligatorio</p>
+              }
 
-    <div class="field">
-        <label class="campo" for="hasta">Hasta</label>
-        <input id="hasta" type="number" 
-         formControlName="hasta">
-    </div>
-    @if (parcialForm.hasError('rangoAnios') && 
-     (parcialForm.controls.desde.touched ||
-      parcialForm.controls.desde.dirty || 
-      parcialForm.controls.hasta.touched || 
-      parcialForm.controls.hasta.dirty
-     )
-     ) {
-        <p class="error">
-            Hasta debe ser mayor que Desde.
+              @if (parcialForm.controls.codigo.hasError('pattern')) {
+                  <p class="error">El código debe 2 letras Mayúsculas 3 números.</p>
+              }
+           }
+
+          <div class="field">
+              <label class="campo" for="cantidad">Cantidad</label>
+              <input id="cantidad" type="number" 
+              formControlName="cantidad">
+          </div>
+          @if (parcialForm.controls.cantidad.invalid &&
+           (parcialForm.controls.cantidad.touched || parcialForm.controls.cantidad.dirty)) {
+              @if (parcialForm.controls.cantidad.hasError('required')) {
+                  <p class="error">La cantidad es obligatoria</p>
+              }
+              @if (parcialForm.controls.cantidad.hasError('min')) {
+                  <p class="error">La cantidad mínima es 1</p>
+              }
+              @if (parcialForm.controls.cantidad.hasError('max')) {
+                  <p class="error">La cantidad maxima es 24</p>
+              }
+              @if (parcialForm.controls.cantidad.hasError('noEsMultiplo')) {
+                  <p class="error">La cantidad debe ser múltiplo de 4.</p>
+              }
+           }
+
+          <div class="field">
+              <label class="campo" for="desde">Desde</label>
+              <input id="desde" type="number"
+               formControlName="desde">
+          </div>
+          @if (parcialForm.controls.desde.invalid &&
+           (parcialForm.controls.desde.touched || parcialForm.controls.desde.dirty)) {
+              @if (parcialForm.controls.desde.hasError('required')) {
+                  <p class="error">Desde es obligatorio</p>
+              }
+           }
+
+          <div class="field">
+              <label class="campo" for="hasta">Hasta</label>
+              <input id="hasta" type="number" 
+               formControlName="hasta">
+          </div>
+          @if (parcialForm.controls.hasta.invalid &&
+           (parcialForm.controls.hasta.touched || parcialForm.controls.hasta.dirty)) {
+              @if (parcialForm.controls.hasta.hasError('required')) {
+                  <p class="error">Hasta es obligatorio</p>
+              }
+           }
+          @if (parcialForm.hasError('rangoAnios') && 
+           (parcialForm.controls.desde.touched ||
+            parcialForm.controls.desde.dirty || 
+            parcialForm.controls.hasta.touched || 
+            parcialForm.controls.hasta.dirty
+           )
+           ) {
+              <p class="error">
+                  Hasta debe ser mayor que Desde.
+              </p>
+           }
+
+          <div class="form-actions">
+            <button type="submit" class="submit-button">
+              Enviar
+            </button>
+          </div>
+
+        </form>
+
+        
+      <hr>
+
+      <h2>Buscar productos</h2>
+
+      <div>
+        <label for="buscar">Buscar:</label>
+
+        <input
+          id="buscar"
+          type="text"
+          [formControl]="buscar"
+          placeholder="Escribe un producto..."
+        >
+      </div>
+
+      <div>
+        <p>
+          Último valor:
+          <strong>{{ estadoBusqueda().ultimoValor }}</strong>
         </p>
-     }
 
-    <div class="form-actions">
-      <button type="submit" class="submit-button">
-        Enviar
-      </button>
+        <p>
+          Emisiones:
+          <strong>{{ estadoBusqueda().emisiones }}</strong>
+        </p>
+      </div>
+
+      <hr>
+
+
+      <h3>Listado de productos</h3>
+
+      @if (productosFiltrados().length > 0) {
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Cantidad</th>
+              <th>Desde</th>
+              <th>Hasta</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (producto of productosFiltrados(); track producto.codigo) {
+              <tr>
+                <td>{{ producto.codigo }}</td>
+                <td>{{ producto.cantidad }}</td>
+                <td>{{ producto.desde }}</td>
+                <td>{{ producto.hasta }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else {
+        <p>No se encontraron productos.</p>
+      }
+
+      </div>
+
     </div>
 
-  </form>
+    <!-- Panel de detalle del producto (outlet nombrado) -->
+    <div class="details-panel">
+      <router-outlet name="panel"></router-outlet>
+    </div>
 
-  
-<hr>
+  </div>
 
-<h2>Buscar productos</h2>
-
-<div>
-  <label for="buscar">Buscar:</label>
-
-  <input
-    id="buscar"
-    type="text"
-    [formControl]="buscar"
-    placeholder="Escribe un producto..."
-  >
-</div>
-
-<div>
-  <p>
-    Último valor:
-    <strong>{{ estadoBusqueda().ultimoValor }}</strong>
-  </p>
-
-  <p>
-    Emisiones:
-    <strong>{{ estadoBusqueda().emisiones }}</strong>
-  </p>
-</div>
-
-<hr>
-
-
-<h3>Listado de productos</h3>
-
-@if (productosFiltrados().length > 0) {
-  <table>
-    <thead>
-      <tr>
-        <th>Código</th>
-        <th>Cantidad</th>
-        <th>Desde</th>
-        <th>Hasta</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      @for (producto of productosFiltrados(); track producto.codigo) {
-        <tr>
-          <td>{{ producto.codigo }}</td>
-          <td>{{ producto.cantidad }}</td>
-          <td>{{ producto.desde }}</td>
-          <td>{{ producto.hasta }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
-} @else {
-  <p>No se encontraron productos.</p>
-}
-
-
-
-</div>
+</section>

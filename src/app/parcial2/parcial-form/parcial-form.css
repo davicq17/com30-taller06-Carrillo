@@ -8,6 +8,66 @@
   color: #263238;
 }
 
+/* Contenedor general: formulario a la izquierda, panel a la derecha */
+
+.parcial-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.parcial-main {
+  min-width: 0;
+}
+
+.reservation-header {
+  max-width: 850px;
+  margin: 0 auto 16px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hint {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Tabla de productos */
+
+table {
+  width: 100%;
+  max-width: 850px;
+  margin-top: 12px;
+  border-collapse: collapse;
+  background: white;
+  font-size: 13px;
+}
+
+th,
+td {
+  padding: 9px 11px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+th {
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 12px;
+}
+
 h2 {
   max-width: 850px;
   margin: 0 auto 25px;

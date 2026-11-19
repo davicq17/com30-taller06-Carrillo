@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { PlaceList } from './place-list';
 
 describe('PlaceList', () => {
@@ -8,6 +9,7 @@ describe('PlaceList', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PlaceList],
+      providers: [provideRouter([])]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PlaceList);

@@ -11,6 +11,8 @@ describe('ReservationForm', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(ReservationForm);
+    fixture.componentRef.setInput('place', 'Auditorio Central');
+    fixture.componentRef.setInput('placeId', 'p1');
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

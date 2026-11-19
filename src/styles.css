@@ -20,6 +20,10 @@
   grid-template-columns: minmax(0, 1fr) 340px;
 }
 
+.places-layout:has(.details-panel app-panel) {
+  grid-template-columns: minmax(0, 1fr) 320px;
+}
+
 .details-panel {
   display: block;
   width: 100%;
@@ -28,7 +32,7 @@
   top: 20px;
 }
 
-.details-panel:not(:has(app-panel-place, app-reservation-form)) {
+.details-panel:not(:has(app-panel-place, app-reservation-form, app-panel)) {
   display: none;
 }
 
@@ -54,12 +58,17 @@
   .places-layout:has(.details-panel app-reservation-form) {
     grid-template-columns: minmax(0, 1fr) 300px;
   }
+
+  .places-layout:has(.details-panel app-panel) {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
 }
 
 @media (max-width: 650px) {
   .places-layout,
   .places-layout:has(.details-panel app-panel-place),
-  .places-layout:has(.details-panel app-reservation-form) {
+  .places-layout:has(.details-panel app-reservation-form),
+  .places-layout:has(.details-panel app-panel) {
     grid-template-columns: 1fr;
   }
 

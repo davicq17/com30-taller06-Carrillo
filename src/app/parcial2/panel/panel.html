@@ -1,64 +1,40 @@
-@if(producto(); as p){
-    
-    <div class="place-detail-container">
+@if (producto(); as p) {
+
+  <div class="place-detail-container">
 
     <article class="place-card">
-        
-        <div class="card-header">
-            <h3>{{ p.name }}</h3>
-            
-            <span
-             class="status"
-             [ngClass]="p.status.toLowerCase()">
-             @switch(p.status){
-                @case('AVAILABLE') {Disponible}
-                @case('PENDING') {Pendiente}
-                @case('RESERVED') {Reservado}
-                @default {Inactivo}
-             }
-            </span>
-        </div>
 
-        <p class="location">
-          <span>Ubicación:</span> {{ p.location }}
-        </p>
-
-        <div class="place-details">
-          <span>Capacidad: {{ p. }} personas</span>
-          <span>Categoría: {{ p.category }}</span>
-          <span>Horario: {{ p.openingTime }} - {{ p.closingTime }}</span>
-        </div>
-
-        <p class="description">
-          {{ p.description }}
-        </p>
-
-        <div class="items-info">
-          <strong>Elementos registrados:</strong>
-
-          @for (item of p.items; track $index) {
-            <span class="item-tag">
-              {{ item.name }} ({{ item.quantity }})
-            </span>
-          } @empty {
-            <span class="no-items">Sin elementos registrados</span>
-          }
-        </div>
-
-        <div class="card-actions">
-            <a class="detail-button" [routerLink]="volver()">
-                Cerrar panel
-            </a>
-        </div>
-
-      </article>
+      <div class="card-header">
+        <h3>{{ p.codigo }}</h3>
+        <span class="status">Registrado</span>
       </div>
-}@else {
-    <div class="place-detail-container">
-        <div class="not-found-place">
-            <h3>Espacio no encontrado</h3>
-            <p>No existe un espacio con el código <b>{{ id() }}</b>.</p>
-            <a class="delete-button" [routerLink]="volver()">Volver</a>
-        </div>
+
+      <div class="place-details">
+        <span>Cantidad: {{ p.cantidad }}</span>
+        <span>Desde: {{ p.desde }}</span>
+        <span>Hasta: {{ p.hasta }}</span>
+        <span>Bloques: {{ bloque() }}</span>
+        <span>Margen: {{ margen() }}</span>
+      </div>
+
+      <div class="card-actions">
+        <a class="detail-button" [routerLink]="volver()">
+          Cerrar panel
+        </a>
+      </div>
+
+    </article>
+
+  </div>
+
+} @else {
+
+  <div class="place-detail-container">
+    <div class="not-found-place">
+      <h3>Producto no encontrado</h3>
+      <p>No existe un producto con el código <b>{{ codigo() }}</b>.</p>
+      <a class="detail-button" [routerLink]="volver()">Cerrar panel</a>
     </div>
+  </div>
+
 }
