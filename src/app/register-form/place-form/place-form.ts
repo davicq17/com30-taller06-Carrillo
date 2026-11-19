@@ -50,7 +50,6 @@ export class PlaceForm {
     this.items.clear();
     this.addItem();
 
-    // Ir al detalle del registro recién creado
     this.router.navigateByUrl(`/places/(panel:place/${nuevo.id})`);
 
     console.log('Espacio registrado correctamente')

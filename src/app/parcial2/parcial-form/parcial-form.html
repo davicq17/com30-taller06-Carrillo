@@ -1,0 +1,78 @@
+<div class="reservation-card">
+
+  <header class="reservation-header">
+    <p class="eyebrow">Registro Producto</p>
+    <p class="hint">Completa los datos del producto.</p>
+  </header>
+
+  <form [formGroup]="parcialForm" (ngSubmit)="onSubmit()">
+
+    <div class="field">
+        <label class="campo" for="codigo">Código</label>
+        <input  id="codigo" type="text" 
+         formControlName="codigo">
+    </div>
+    @if (parcialForm.controls.codigo.invalid &&
+     (parcialForm.controls.codigo.touched || parcialForm.controls.codigo.dirty)) {
+        @if (parcialForm.controls.codigo.hasError('required')) {
+            <p class="error">El código es obligatorio</p>
+        }
+
+        @if (parcialForm.controls.codigo.hasError('pattern')) {
+            <p class="error">El código debe 2 letras Mayúsculas 3 números.</p>
+        }
+     }
+
+    <div class="field">
+        <label class="campo" for="cantidad">Cantidad</label>
+        <input id="cantidad" type="number" 
+        formControlName="cantidad">
+    </div>
+    @if (parcialForm.controls.cantidad.invalid &&
+     (parcialForm.controls.cantidad.touched || parcialForm.controls.cantidad.dirty)) {
+        @if (parcialForm.controls.cantidad.hasError('required')) {
+            <p class="error">La cantidad es obligatoriar</p>
+        }
+        @if (parcialForm.controls.cantidad.hasError('min')) {
+            <p class="error">La cantidad mínima es 1</p>
+        }
+        @if (parcialForm.controls.cantidad.hasError('max')) {
+            <p class="error">La cantidad maxima es 24</p>
+        }
+        @if (parcialForm.controls.cantidad.hasError('noEsMultiplo')) {
+            <p class="error">La cantidad debe ser múltiplo de 4.</p>
+        }
+     }
+
+    <div class="field">
+        <label class="campo" for="desde">Desde</label>
+        <input id="desde" type="number"
+         formControlName="desde">
+    </div>
+
+    <div class="field">
+        <label class="campo" for="hasta">Hasta</label>
+        <input id="hasta" type="number" 
+         formControlName="hasta">
+    </div>
+    @if (parcialForm.hasError('rangoAnios') && 
+     (parcialForm.controls.desde.touched ||
+      parcialForm.controls.desde.dirty || 
+      parcialForm.controls.hasta.touched || 
+      parcialForm.controls.hasta.dirty
+     )
+     ) {
+        <p class="error">
+            Hasta debe ser mayor que Desde.
+        </p>
+     }
+
+    <div class="form-actions">
+      <button type="submit" class="submit-button">
+        Enviar
+      </button>
+    </div>
+
+  </form>
+
+</div>

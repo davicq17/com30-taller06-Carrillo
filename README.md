@@ -111,8 +111,3 @@ La ruta `/my-reservations` se carga con `loadComponent`; su chunk aparece en
 | C7 | Abrir una URL desconocida | Vista 404 con la dirección solicitada y enlace "Volver al inicio". |
 | C8 | Registrar un espacio válido | Se navega al detalle del registro creado. |
 | C9 | Entrar a `/my-reservations` con F12 > Red abierto | Se descarga un chunk nuevo por `loadComponent`. |
-
-## Enlace del proyecto
-
-- Repositorio: _(pegar aquí el enlace que abra en una ventana privada)_
-- Aplicación local: http://localhost:4200
