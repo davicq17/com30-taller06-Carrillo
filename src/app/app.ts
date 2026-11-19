@@ -15,6 +15,7 @@ export class App {
   readonly menu= [
     {label: 'Lista de Lugares', route: 'places',rol: 'admin'},
     {label: 'Reservaciones', route:'reservations', rol: 'admin'},
+    {label: 'parcial2', route: 'parcial2', rol:'admin'},
     {label: 'Lugares', route:'client', rol:'client'},
     {label: 'Mis reservas', route:'my-reservations', rol: 'client'}
   ];

@@ -224,3 +224,24 @@ button[type="submit"]:hover {
     padding: 15px;
   }
 }
+
+
+input {
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+h2, h3 {
+  color: #1976d2;
+}
+
+li {
+  padding: 8px;
+}
+
+strong {
+  color: #1976d2;
+}

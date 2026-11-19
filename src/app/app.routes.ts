@@ -9,6 +9,9 @@ export const routes: Routes = [
     {path: '',
         loadChildren: () => import('./pages/client.routes').then(m => m.clientRoutes)
     },
+    {path: 'parcial2',
+        loadChildren: () => import('./parcial2/parcial.routes').then(m => m.parcial2Routes)
+    },
     {path: 'ayuda', component: NotFound, title:'Ayuda'},
     {path: '**', component: NotFound, title: 'No encontrada'}
 ];

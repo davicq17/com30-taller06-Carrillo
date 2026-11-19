@@ -75,4 +75,65 @@
 
   </form>
 
+  
+<hr>
+
+<h2>Buscar productos</h2>
+
+<div>
+  <label for="buscar">Buscar:</label>
+
+  <input
+    id="buscar"
+    type="text"
+    [formControl]="buscar"
+    placeholder="Escribe un producto..."
+  >
+</div>
+
+<div>
+  <p>
+    Último valor:
+    <strong>{{ estadoBusqueda().ultimoValor }}</strong>
+  </p>
+
+  <p>
+    Emisiones:
+    <strong>{{ estadoBusqueda().emisiones }}</strong>
+  </p>
+</div>
+
+<hr>
+
+
+<h3>Listado de productos</h3>
+
+@if (productosFiltrados().length > 0) {
+  <table>
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Cantidad</th>
+        <th>Desde</th>
+        <th>Hasta</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (producto of productosFiltrados(); track producto.codigo) {
+        <tr>
+          <td>{{ producto.codigo }}</td>
+          <td>{{ producto.cantidad }}</td>
+          <td>{{ producto.desde }}</td>
+          <td>{{ producto.hasta }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+} @else {
+  <p>No se encontraron productos.</p>
+}
+
+
+
 </div>
